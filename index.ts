@@ -1,6 +1,6 @@
-import './t-link'
-import './t-link-2'
-import './t-header'
+import './msc/t-link'
+import './msc/t-link-2'
+import './msc/t-header'
 
 import './dropdown/t-dropdown'
 import './dropdown/t-dropdown-list'

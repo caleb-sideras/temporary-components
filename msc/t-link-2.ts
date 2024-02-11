@@ -1,6 +1,6 @@
 import { css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
-import { HTMXElement } from "./t-htmx";
+import { HTMXElement } from "../htmx/t-htmx";
 
 @customElement('t-link-2')
 export class TLink2 extends HTMXElement {

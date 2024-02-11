@@ -1,6 +1,6 @@
-import { css, nothing, html } from "lit"
+import { css, nothing } from "lit"
 import { customElement, property } from "lit/decorators.js"
-import { HTMXElement } from "./t-htmx";
+import { HTMXElement } from "../htmx/t-htmx";
 import { literal, StaticValue, html as staticHtml } from 'lit/static-html.js';
 
 @customElement('t-link')
