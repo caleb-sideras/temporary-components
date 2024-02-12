@@ -59,19 +59,11 @@ export class TNavigation extends LitElement {
     mainElement.removeEventListener("htmx:beforeRequest", (e: Event) => { this.htmxReValidate(e) });
   }
 
-  /**
-  * Temp fix while HTMX doesnt support shadowDOM
-  */
   private htmxReValidate(event: any) {
     const target = event.target;
 
-    if (target.hasAttribute("hx-push-url") && target.getAttribute("hx-push-url") === 'true') {
-      /**
-        * NOTE
-        * Temp fix while shadowDOM is broken
-      **/
-      // this.url = target.getAttribute("href") as string;
-      this.url = target.getAttribute("hx-get") as string;
+    if (target.hasAttribute("hx-boost") && target.getAttribute("hx-boost") === 'true') {
+      this.url = target.getAttribute("href") as string;
       this.initRail();
       this.initDrawers();
     };
@@ -201,13 +193,6 @@ export class TNavigation extends LitElement {
     const cleanPath = path.split(/[?#]/)[0];
     return cleanPath;
   }
-
-  // getRootNodeUrl(url: string): string {
-  //   const urls = this.splitLeafUrl(url);
-  //   if (!urls || urls.length <= 0) return '';
-
-  //   return urls[0];
-  // }
 
   splitLeafUrl(url: string): string[] {
     const trimmedUrl = url.replace(/^\/|\/$/g, '');

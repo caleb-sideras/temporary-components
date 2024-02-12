@@ -23,14 +23,16 @@ export class TMobileNavigation extends MdNavigationDrawerModal {
         --md-navigation-drawer-modal-container-shape: 0px;
       }
       .md3-navigation-drawer-modal__slot-content{
-        margin: 16px 0 auto;
+        height: 100%;
       }
       .md3-navigation-drawer-modal__slot-icon{
         margin-bottom: 8px;
         margin-left: 26px;
+        margin-top: 16px;
       }
       .md3-navigation-drawer-modal__slot-lists{
         margin: 0 8px;
+        height: 100%;
       }
       .md3-navigation-drawer-modal--scrim-visible{
         z-index: 1;
@@ -250,6 +252,8 @@ export class TMobileNavigation extends MdNavigationDrawerModal {
             <slot name="rail" @request-activation="${this.onActivateDrawer}" @close-navigation="${this.closeModal}"></slot>
             <slot name="drawer" @activate-rail="${this.onActivateRail}" @request-activation="${this.closeModal}"></slot>        
           </div>
+          <slot name="footer" class="md3-navigation-drawer-modal__slot-footer">
+          </slot>
         </div>
       </div>
     `;
