@@ -33,12 +33,16 @@ export class TMobileNavigation extends MdNavigationDrawerModal {
       .md3-navigation-drawer-modal__slot-lists{
         margin: 0 8px;
         height: 100%;
+        overflow-y: scroll;
       }
       .md3-navigation-drawer-modal--scrim-visible{
         z-index: 1;
       }
       .md3-navigation-drawer-modal{
         z-index: 2;
+      }
+      ::slotted([slot="footer"]) {  
+        padding-bottom: env(safe-area-inset-bottom, 20px);
       }
     `,
   ]
@@ -54,6 +58,8 @@ export class TMobileNavigation extends MdNavigationDrawerModal {
 
   public railAttribute: string = 't-mobile-navigation-rail';
   public drawerAttribute: string = 't-mobile-navigation-drawer';
+
+  public activeNavigationContainer: TNavigationContainer;
 
   /**
     * This is needed to allow children to mount/render/update (i.e. run their logic) before parent accesses their computed properties
@@ -105,6 +111,7 @@ export class TMobileNavigation extends MdNavigationDrawerModal {
 
     this.rail = this.railItems[0];
     this.drawers = this.drawerItems;
+    this.activeNavigationContainer = this.rail;
   }
 
   protected isMobileNaviationRail(rail: TMobileNavigationRail): boolean {
@@ -126,9 +133,11 @@ export class TMobileNavigation extends MdNavigationDrawerModal {
       const matchingItem = drawer.listController.getListItem(item.href);
       // If we do, use brower state to current item
       if (matchingItem) {
+        // The reason we a revalidating from browser opposed to the 'href' from the matching item, is because on MOBILE, some navigation-rail-items are NOT links. They are buttons that activate navigation-drawers! 
         drawer.revalidateFromBrower();
         this.deactivateRail();
         this.activateItem(drawer);
+        this.activeNavigationContainer = drawer;
         return;
       }
     }
@@ -143,6 +152,7 @@ export class TMobileNavigation extends MdNavigationDrawerModal {
     this.deactivateDrawers();
     this.rail.revalidateFromUrl(this.getURL());
     this.activateItem(this.rail);
+    this.activeNavigationContainer = this.rail;
   }
 
   onActivateItem(item: TNavigationContainer) {
@@ -182,6 +192,11 @@ export class TMobileNavigation extends MdNavigationDrawerModal {
 
   openModal() {
     this.opened = true;
+    this.revalidateActiveContainer();
+  }
+
+  revalidateActiveContainer() {
+    this.activeNavigationContainer.revalidateFromBrower();
   }
 
   /**
@@ -252,7 +267,7 @@ export class TMobileNavigation extends MdNavigationDrawerModal {
             <slot name="rail" @request-activation="${this.onActivateDrawer}" @close-navigation="${this.closeModal}"></slot>
             <slot name="drawer" @activate-rail="${this.onActivateRail}" @request-activation="${this.closeModal}"></slot>        
           </div>
-          <slot name="footer" class="md3-navigation-drawer-modal__slot-footer">
+          <slot name="footer">
           </slot>
         </div>
       </div>

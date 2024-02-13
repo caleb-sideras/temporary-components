@@ -48,7 +48,7 @@ export class TMobileTopAppBar extends LitElement {
   }
 
   activateNav() {
-    this.mobileNav.opened = true;
+    this.mobileNav.openModal();
   }
 
   render() {
