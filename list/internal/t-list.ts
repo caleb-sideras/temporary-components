@@ -3,6 +3,7 @@ import { queryAssignedElements } from 'lit/decorators.js';
 import { NavigableKeys } from '@material/web/list/internal/list-controller.js';
 import { ListItem as SharedListItem } from '@material/web/list/internal/list-navigation-helpers.js';
 import { TListController } from './t-list-controller';
+import 'element-internals-polyfill';
 
 const NAVIGABLE_KEY_SET = new Set<string>(Object.values(NavigableKeys));
 
@@ -53,7 +54,7 @@ export class TList extends LitElement {
 
   private readonly internals =
     // Cast needed for closure
-    (this as HTMLElement).attachInternals();
+    (this as any).attachInternals!();
 
   constructor() {
     super();
